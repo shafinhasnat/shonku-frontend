@@ -2,25 +2,39 @@ import React, { useState, useEffect } from "react";
 import Modl from "../common/modal";
 import useStyles from "../../assets/styles";
 import { Button, TextField } from "@material-ui/core";
-import { create_app, initialize_build, build, deploy } from "../../api/api";
-const Build = (props) => {
+import { create_app, launch } from "../../api/api";
+const AddDatabase = (props) => {
+  const [projectName, setProjectName] = useState("todoapp");
+  const [url, setUrl] = useState("");
   const classes = useStyles();
+
   const handleClick = () => {
-    console.log("sdfadfasdfasd");
-    const payload = { app_name: props.selected.app_name };
-    deploy(payload)
+    const payload = { app_name: projectName };
+    launch(payload)
       .then((res) => {
-        build(payload)
-          .then((res) => props.onClose())
-          .catch((err) => props.onClose());
+        setUrl(res.data.uri);
+        console.log(res.data);
       })
-      .catch((err) => props.onClose());
+      .catch((err) => {
+        props.onClose();
+      });
   };
   return (
     <Modl toggleModal={true}>
       <div className={classes.modalParentDiv}>
+        <h3>MongoDB URI</h3>
         <div className={classes.modalChildDiv}>
-          <div>Build project: {props.selected.app_name}</div>
+          <div>
+            <TextField
+              id="outlined-basic"
+              variant="outlined"
+              fullWidth
+              value={url}
+              //onChange={onChange}
+              //helperText={error} // error message
+              //error={!!error}
+            />
+          </div>
           <div className={classes.buttonDiv}>
             <Button className={classes.closeButton} onClick={props.onClose}>
               Close
@@ -28,7 +42,7 @@ const Build = (props) => {
             <Button
               className={classes.confirmButton}
               onClick={handleClick}
-              //   disabled={error}
+              //disabled={error}
             >
               Confirm
             </Button>
@@ -38,4 +52,4 @@ const Build = (props) => {
     </Modl>
   );
 };
-export default Build;
+export default AddDatabase;

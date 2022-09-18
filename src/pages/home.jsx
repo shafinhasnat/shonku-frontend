@@ -8,6 +8,7 @@ import {
 import React, { useState } from "react";
 import { create_app, down, up } from "../api/api";
 import useStyles from "../assets/styles";
+import AddDatabase from "../components/actions/adddatabase";
 import Build from "../components/actions/build";
 import NewProject from "../components/actions/newproject";
 import Upload from "../components/actions/upload";
@@ -82,6 +83,16 @@ const Home = () => {
           <Button
             className={classes.confirmButton}
             onClick={() => {
+              setAction("addDatabase");
+            }}
+            style={{ marginLeft: 10 }}
+            // disabled={!selected}
+          >
+            ADD DATABASE
+          </Button>
+          <Button
+            className={classes.confirmButton}
+            onClick={() => {
               setToggleAction(!toggleAction);
             }}
             disabled={!selected}
@@ -116,7 +127,7 @@ const Home = () => {
             )}
             {selected && selected.codebase && (
               <MenuItem onClick={() => handleModal("build")}>
-                <div style={{ padding: "0px 10px 0px 10px" }}>Build</div>
+                <div style={{ padding: "0px 10px 0px 10px" }}>Deploy</div>
               </MenuItem>
             )}
           </MenuList>
@@ -158,6 +169,7 @@ const Home = () => {
       {action === "new" && <NewProject onClose={clearAll} />}
       {action === "build" && <Build onClose={clearAll} selected={selected} />}
       {action === "upload" && <Upload onClose={clearAll} selected={selected} />}
+      {action === "addDatabase" && <AddDatabase onClose={clearAll} />}
       {/* <Button onClick={() => setToggleModal(!toggleModal)}>
         Create New Project
       </Button> */}
