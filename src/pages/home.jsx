@@ -169,7 +169,9 @@ const Home = () => {
       {action === "new" && <NewProject onClose={clearAll} />}
       {action === "build" && <Build onClose={clearAll} selected={selected} />}
       {action === "upload" && <Upload onClose={clearAll} selected={selected} />}
-      {action === "addDatabase" && <AddDatabase onClose={clearAll} />}
+      {action === "addDatabase" && (
+        <AddDatabase selected={selected} onClose={clearAll} />
+      )}
       {/* <Button onClick={() => setToggleModal(!toggleModal)}>
         Create New Project
       </Button> */}

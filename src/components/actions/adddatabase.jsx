@@ -4,12 +4,11 @@ import useStyles from "../../assets/styles";
 import { Button, TextField } from "@material-ui/core";
 import { create_app, launch } from "../../api/api";
 const AddDatabase = (props) => {
-  const [projectName, setProjectName] = useState("todoapp");
   const [url, setUrl] = useState("");
   const classes = useStyles();
 
   const handleClick = () => {
-    const payload = { app_name: projectName };
+    const payload = { app_name: props.selected.app_name };
     launch(payload)
       .then((res) => {
         setUrl(res.data.uri);
@@ -23,6 +22,7 @@ const AddDatabase = (props) => {
     <Modl toggleModal={true}>
       <div className={classes.modalParentDiv}>
         <h3>MongoDB URI</h3>
+        <h4>Launch project: {props.selected.app_name}</h4>
         <div className={classes.modalChildDiv}>
           <div>
             <TextField
@@ -30,20 +30,13 @@ const AddDatabase = (props) => {
               variant="outlined"
               fullWidth
               value={url}
-              //onChange={onChange}
-              //helperText={error} // error message
-              //error={!!error}
             />
           </div>
           <div className={classes.buttonDiv}>
             <Button className={classes.closeButton} onClick={props.onClose}>
               Close
             </Button>
-            <Button
-              className={classes.confirmButton}
-              onClick={handleClick}
-              //disabled={error}
-            >
+            <Button className={classes.confirmButton} onClick={handleClick}>
               Confirm
             </Button>
           </div>
