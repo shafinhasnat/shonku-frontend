@@ -86,7 +86,7 @@ const Home = () => {
               setAction("addDatabase");
             }}
             style={{ marginLeft: 10 }}
-            // disabled={!selected}
+            disabled={!selected}
           >
             ADD DATABASE
           </Button>
